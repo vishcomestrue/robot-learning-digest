@@ -72,6 +72,6 @@ Also notable: 2611.25958 (Bellegarda terrain gaits), 2611.20452 (XMimic/XSoma),
 - [ ] Save digests as `digests/YYYY-MM-DD.md` in this folder
 
 ## Website
-`site/index.html` (open in a browser) renders `site/data.js`. Each weekly run must prepend a week object to
+`site/index.html` (open in a browser) renders `site/data.js`. Each weekly run must prepend a week object (never edit or remove existing weeks; a failed run pushes nothing) to
 `DIGESTS` in `site/data.js` and update `PROFILE` (weights, liked/disliked). The site's rate buttons produce
 a feedback line for me to paste back here.
