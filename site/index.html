@@ -19,7 +19,7 @@ aside{border-right:1px solid var(--line);padding:22px 18px;position:sticky;top:0
 h3{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--mute);margin:22px 0 8px}
 .chips{display:flex;flex-wrap:wrap;gap:5px}
 .chip{font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid var(--line);background:var(--card)}
-.bar{display:grid;grid-template-columns:92px 1fr 30px;align-items:center;gap:8px;font-size:13px;margin:5px 0}
+.bar{display:grid;grid-template-columns:92px 1fr 36px;align-items:center;gap:8px;font-size:13px;margin:5px 0}
 .track{height:6px;border-radius:3px;background:var(--soft);overflow:hidden}.track i{display:block;height:100%}
 .rub{font-size:12px;color:var(--mute);line-height:1.7}
 main{padding:22px 32px 90px;min-width:0}
@@ -135,7 +135,7 @@ function score(p,allTab){
 
 function sidebar(){
   const max=Math.max(1.5,...Object.values(P.weights||{}));
-  $("weights").innerHTML=Object.entries(P.weights||{}).map(([k,v])=>`<div class="bar"><span>${k}</span><span class="track"><i style="width:${v/max*100}%;background:${COL[k]}"></i></span><span>${v.toFixed(1)}</span></div>`).join("");
+  $("weights").innerHTML=Object.entries(P.weights||{}).map(([k,v])=>`<div class="bar"><span>${k}</span><span class="track"><i style="width:${v/max*100}%;background:${COL[k]}"></i></span><span>${v.toFixed(2)}</span></div>`).join("");
   const t=P.rubric?.taste||{}, f=P.rubric?.field||{};
   $("rubric").innerHTML=`Score = Σ criterion × weight, × topic weight, + rating boost.<br>Taste picks: ${CRIT.map(([k,n])=>`${n} ${Math.round((t[k]||0)*100)}%`).join(" · ")}<br>Field picks (topic tabs only; All uses taste weights for everyone): ${CRIT.filter(([k])=>f[k]).map(([k,n])=>`${n} ${Math.round(f[k]*100)}%`).join(" · ")}<br>Boost: ${Object.entries(P.ratingBoost||{}).map(([k,v])=>`${k} ${v>0?"+":""}${v}`).join(" · ")}`;
   const chips=a=>(a||[]).map(x=>`<span class="chip">${esc(x)}</span>`).join("")||`<span class="sub">none yet</span>`;
