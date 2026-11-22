@@ -123,7 +123,8 @@ const S=Object.assign({topic:"All",week:"all",tag:"All",sort:"score",hideRead:fa
 const save=()=>ls.set("ui2",{topic:S.topic,week:S.week,tag:S.tag,sort:S.sort,hideRead:S.hideRead});
 let read=ls.get("read",{}), mine=ls.get("myRatings",{}); // mine: {id:{r,why}} not yet sent
 
-const ratingOf=p=>mine[p.id]?.r??p.rating??null;
+// Scores use ONLY ratings logged in data.js. Clicks here just build the feedback line (stored in this browser only).
+const ratingOf=p=>p.rating??null;
 // In the All tab every paper uses the taste rubric so field picks don't outrank on-taste papers.
 function score(p,allTab){
   if(!p.scores)return null;
@@ -161,7 +162,7 @@ function list(){
   return r;
 }
 function card(p,i){
-  const s=p._s, R=mine[p.id]||{}, rt=ratingOf(p);
+  const s=p._s, R=mine[p.id]||{}, rt=R.r??null;
   return `<article class="card ${p.topic} ${read[p.id]?"read":""}" data-id="${p.id}">
   <div class="chead"><span class="rank">#${i+1}</span>
     <h4><a href="${pdf(p.id)}" target="_blank" rel="noopener">${esc(p.title)}</a></h4>
@@ -179,7 +180,7 @@ function card(p,i){
     <button class="readbtn ${read[p.id]?"on":""}" data-act="read">${read[p.id]?"✓ Read":"Mark read"}</button></div>
   <div class="rate">${["👍","👎","meh"].map(r=>`<button class="${rt===r?"on":""}" data-r="${r}">${r}</button>`).join("")}
     <input placeholder="${p.rating?"saved: "+esc(p.ratingNote||p.rating):"reason (optional)"}" value="${esc(R.why||"")}">
-    ${p.rating&&!mine[p.id]?`<span class="saved">logged</span>`:""}</div>
+    ${p.rating?`<span class="saved">logged: ${esc(p.rating)}</span>`:""}</div>
 </article>`;
 }
 function render(){
