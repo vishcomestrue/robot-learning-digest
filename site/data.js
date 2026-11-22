@@ -37,7 +37,7 @@ window.DIGESTS = [
       { id: "2611.22388", title: "Hidden Variables Behind Real-Robot Data Quality",
         authors: "AgiBot", topic: "Manipulation", tag: "FYI", pick: "field", evidence: "real robot",
         code: "", score: null,
-        why: "Large-scale study of which hidden factors in teleoperated real-robot data actually drive policy quality. This is the field pick: it matters for anyone collecting VLA/manipulation data." }
+        why: "Large-scale study of which hidden factors in teleoperated real-robot data actually drive policy quality. This is the field pick: it matters for anyone collecting VLA/manipulation data." },
       { id: "2611.25958", title: "Bellegarda: terrain-adaptive gaits",
         authors: "Bellegarda et al.", topic: "Quadruped", tag: "Must-read", pick: "taste", evidence: "",
         code: "", score: null,
