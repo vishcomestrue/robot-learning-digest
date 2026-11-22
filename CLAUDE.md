@@ -16,7 +16,9 @@ My ratings come from skimming, so treat them as a taste signal, not a quality ve
   proprioceptive state + terrain estimation, Bellegarda's work.
 - **Seed papers (loved):** see `seeds.md` (themes inferred from ~65 papers in my thesis/vault folders).
 - **Followed authors / labs:** see `seeds.md` (ETH RSL, Berkeley/CMU, MIT Improbable AI, Zakka, Stanford).
-- **Topic weights:** Quadruped 1.5 · Humanoid 1.2 · Manipulation 1.1 (adjusted from feedback, ±0.1 per rating).
+- **Topic weights:** Quadruped 1.18 · Humanoid 0.95 · Manipulation 0.87. Relative multipliers: after each feedback
+  batch apply ±0.1 per rating, then **normalize so the three weights average 1.0** (no cap for now). Ideas matter more
+  than robot type, so the liked/disliked themes drive ranking more than these weights.
 
 ## Selection
 - **No fixed count.** Include every paper that clears the bar (typically 5–8, **never more than 8**): taste picks (closest to my work) + 1–2 **field picks** (biggest papers of the week

@@ -3,7 +3,7 @@
 // topic weights below, so the whole library re-ranks as taste changes.
 window.PROFILE = {
   updated: "2026-11-22",
-  weights: { Quadruped: 1.5, Humanoid: 1.2, Manipulation: 1.1 },
+  weights: { Quadruped: 1.18, Humanoid: 0.95, Manipulation: 0.87 },
   rubric: {
     taste:   { taste: 0.35, novelty: 0.20, evidence: 0.20, signal: 0.15, reuse: 0.10 },
     field:   { taste: 0.00, novelty: 0.20, evidence: 0.20, signal: 0.50, reuse: 0.10 }

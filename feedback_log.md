@@ -29,3 +29,7 @@ Raw: "2611.25215 👍, 2611.22231 👍 i believe this is real world deployable, 
 
 Weights after: Quadruped 1.5 · Humanoid 1.2 · Manipulation 1.1
 Note: the owner is fine with Bellegarda being in also-notable this week.
+
+## 2026-11-22: weight normalization
+Weights normalized to average 1.0 (rule from now on: ±0.1 per rating, then normalize; no cap yet).
+1.5 / 1.2 / 1.1 → Quadruped 1.18 · Humanoid 0.95 · Manipulation 0.87. Ranking unchanged; scores back on the ~0-5 scale.
