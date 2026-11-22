@@ -66,11 +66,14 @@ Also notable: 2611.25958 (Bellegarda terrain gaits), 2611.20452 (XMimic/XSoma),
 2611.24011 (WAM-Policy), 2611.23118 (RWM audit), 2611.26444 (Mind2Act World).
 
 ## Open items
-- [x] Rate the test digest: all 👍; SBEE-style is useful; keep the manipulation slot; promote Bellegarda + XSoma (see `feedback_log.md`)
+- [x] Rate the test digest (see `feedback_log.md`)
 - [x] Add seed papers + authors (inferred; `seeds.md`)
-- [ ] Decide where weekly runs happen: claude.ai cloud scheduled task (laptop can be off)
-      vs. local cron on this laptop (misses weeks when it's off)
-- [ ] Save digests as `digests/YYYY-MM-DD.md` in this folder
+- [x] Weekly runs: cloud routine "Robot Learning Weekly Digest", Sat 02:30 UTC (08:00 IST), Opus 5.5,
+      pushes to github.com/vishcomestrue/robot-learning-digest and sends a phone notification
+- [x] Digests saved as `digests/YYYY-MM-DD.md`; site at https://vishcomestrue.github.io/robot-learning-digest/
+- [ ] Add SuperMimic-series arXiv links to `seeds.md`
+- [ ] Verify the first real run on 2026-11-28 pushed successfully
+- [ ] Topic-weight cap (deferred)
 
 ## Website (one ranked library, not week-by-week)
 `site/index.html` renders `site/data.js`, which holds `PROFILE`, `WEEKS` (one entry per run, newest first,
