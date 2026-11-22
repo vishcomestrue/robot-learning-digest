@@ -71,7 +71,12 @@ Also notable: 2611.25958 (Bellegarda terrain gaits), 2611.20452 (XMimic/XSoma),
       vs. local cron on this laptop (misses weeks when it's off)
 - [ ] Save digests as `digests/YYYY-MM-DD.md` in this folder
 
-## Website
-`site/index.html` (open in a browser) renders `site/data.js`. Each weekly run must prepend a week object (never edit or remove existing weeks; a failed run pushes nothing) to
-`DIGESTS` in `site/data.js` and update `PROFILE` (weights, liked/disliked). The site's rate buttons produce
-a feedback line for me to paste back here.
+## Website (one ranked library, not week-by-week)
+`site/index.html` renders `site/data.js`, which holds `PROFILE`, `WEEKS` (one entry per run, newest first,
+with also-notable) and `PAPERS` (every paper ever picked). The overall score is computed in the browser from
+each paper's per-criterion `scores` (0-5) × the current `PROFILE.rubric` × the topic weight, plus a rating boost,
+so the whole library re-ranks as weights change.
+- Weekly run: append that week's papers to `PAPERS` (with `week` = run date, full `scores` object) and prepend
+  a `WEEKS` entry. **Never edit or remove existing entries; skip ids already in PAPERS; a failed run pushes nothing.**
+- Feedback: update `PROFILE` (weights, liked/disliked), set `rating`/`ratingNote` on the rated papers, log in
+  `feedback_log.md`. The site's feedback line uses arXiv ids: `2611.18305 👍 reason, 2611.24310 meh`.

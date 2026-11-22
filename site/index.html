@@ -6,11 +6,10 @@
 <title>Robot Learning Digest</title>
 <style>
 :root{--bg:#f5f4f0;--card:#fff;--ink:#1c1c1a;--mute:#6b6a65;--line:#e2e0d8;--soft:#eeece6;--acc:#2f5d8a;
-  --must:#b5432f;--skim:#9a7414;--fyi:#5b6b7a;--q:#2f7d5b;--h:#2f5d8a;--m:#8a4f9e;--ok:#2f7d5b}
+  --must:#b5432f;--skim:#9a7414;--fyi:#5b6b7a;--q:#2f7d5b;--h:#2f5d8a;--m:#8a4f9e;--ok:#2f7d5b;--new:#c2410c}
 @media (prefers-color-scheme:dark){:root{--bg:#121211;--card:#1c1c1b;--ink:#ecebe6;--mute:#9b9a94;--line:#2e2d2a;
-  --soft:#252523;--acc:#7fb0e0;--must:#e57a63;--skim:#d6b35a;--fyi:#9fb0c0;--q:#6cc59b;--h:#7fb0e0;--m:#c89ad8;--ok:#6cc59b}}
-*{box-sizing:border-box}
-html,body{margin:0}
+  --soft:#252523;--acc:#7fb0e0;--must:#e57a63;--skim:#d6b35a;--fyi:#9fb0c0;--q:#6cc59b;--h:#7fb0e0;--m:#c89ad8;--ok:#6cc59b;--new:#fb923c}}
+*{box-sizing:border-box}html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
 button,input,select{font:inherit;color:inherit}
@@ -18,73 +17,65 @@ button,input,select{font:inherit;color:inherit}
 aside{border-right:1px solid var(--line);padding:22px 18px;position:sticky;top:0;height:100vh;overflow:auto;background:var(--bg)}
 .brand{font-weight:700;font-size:17px}.sub{color:var(--mute);font-size:13px}
 h3{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--mute);margin:22px 0 8px}
-.weeks button{display:flex;justify-content:space-between;align-items:center;width:100%;text-align:left;background:none;
-  border:0;padding:8px 10px;border-radius:7px;cursor:pointer}
-.weeks button:hover{background:var(--soft)}
-.weeks button.on{background:var(--card);box-shadow:0 0 0 1px var(--line)}
-.weeks small{color:var(--mute);display:block;font-size:12px}
-.pill{font-size:11px;background:var(--soft);border-radius:99px;padding:1px 7px;color:var(--mute)}
 .chips{display:flex;flex-wrap:wrap;gap:5px}
 .chip{font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid var(--line);background:var(--card)}
 .bar{display:grid;grid-template-columns:92px 1fr 30px;align-items:center;gap:8px;font-size:13px;margin:5px 0}
 .track{height:6px;border-radius:3px;background:var(--soft);overflow:hidden}.track i{display:block;height:100%}
-main{padding:24px 32px 90px;min-width:0}
-.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+.rub{font-size:12px;color:var(--mute);line-height:1.7}
+main{padding:22px 32px 90px;min-width:0}
 h1{font-size:24px;margin:0;line-height:1.2}
-.stats{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:10px 14px;min-width:110px}
-.stat b{display:block;font-size:20px}.stat span{font-size:12px;color:var(--mute)}
-.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:16px;position:sticky;top:0;z-index:5;
-  background:var(--bg);padding:10px 0;border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:4px;margin:16px 0 0;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{border:0;background:none;padding:9px 14px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;font-weight:500}
+.tabs button.on{border-bottom-color:var(--tc,var(--ink))}
+.tabs .n{font-size:12px;color:var(--mute);margin-left:5px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0;border-bottom:1px solid var(--line);margin-bottom:16px}
 .tools input[type=search]{flex:1 1 220px;min-width:0;padding:7px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
 .seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
 .seg button{border:0;background:none;padding:6px 11px;cursor:pointer;font-size:13px;white-space:nowrap}
-.seg button+button{border-left:1px solid var(--line)}
-.seg button.on{background:var(--ink);color:var(--bg)}
+.seg button+button{border-left:1px solid var(--line)}.seg button.on{background:var(--ink);color:var(--bg)}
 select{padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--card);font-size:13px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;
-  border-left:4px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;border-left:4px solid var(--line)}
 .card.Quadruped{border-left-color:var(--q)}.card.Humanoid{border-left-color:var(--h)}.card.Manipulation{border-left-color:var(--m)}
-.card.read{opacity:.62}
+.card.read{opacity:.6}
 .chead{display:flex;gap:10px;align-items:flex-start}
-.rank{font-size:13px;font-weight:700;color:var(--mute);min-width:22px;padding-top:2px}
+.rank{font-size:13px;font-weight:700;color:var(--mute);min-width:26px;padding-top:2px}
 .card h4{margin:0;font-size:16px;line-height:1.35;flex:1}
-.score{font-size:13px;font-weight:700;background:var(--soft);border-radius:6px;padding:2px 7px;white-space:nowrap}
+.score{text-align:center;min-width:52px}
+.score b{display:block;font-size:20px;line-height:1}.score span{font-size:10px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}
 .meta{display:flex;flex-wrap:wrap;gap:6px;font-size:12px}
 .b{padding:1px 8px;border-radius:99px;border:1px solid var(--line);color:var(--mute)}
 .b.Must-read{color:var(--must);border-color:currentColor;font-weight:600}.b.Skim{color:var(--skim);border-color:currentColor}
 .b.FYI{color:var(--fyi);border-color:currentColor}.b.field{background:var(--soft)}
+.b.new{color:#fff;background:var(--new);border-color:var(--new);font-weight:600}
 .authors{font-size:13px;color:var(--mute)}
 .why{margin:0;font-size:14.5px}
+.breakdown{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;font-size:11px;color:var(--mute)}
+.breakdown div .track{margin-top:3px}
 .links{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:4px}
 .links a,.links button{font-size:13px;padding:4px 10px;border:1px solid var(--line);border-radius:7px;background:var(--bg);cursor:pointer}
 .links a.primary{background:var(--acc);color:#fff;border-color:var(--acc)}
 .links a:hover{text-decoration:none;border-color:var(--acc)}
+.readbtn.on{color:var(--ok);border-color:var(--ok)!important}
 .rate{display:flex;gap:6px;align-items:center;flex-wrap:wrap;border-top:1px dashed var(--line);padding-top:10px}
 .rate button{padding:3px 10px;border-radius:7px;border:1px solid var(--line);background:none;cursor:pointer;font-size:13px}
 .rate button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .rate input{flex:1;min-width:140px;font-size:13px;padding:4px 8px;border:1px solid var(--line);border-radius:7px;background:var(--bg)}
-.readbtn.on{color:var(--ok);border-color:var(--ok)}
-.wk{font-size:12px;color:var(--mute)}
+.rate .saved{font-size:12px;color:var(--mute)}
 .also{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-top:18px}
 .also ul{margin:0;padding-left:18px;columns:2 320px}.also li{margin:4px 0;break-inside:avoid}
 .empty{color:var(--mute);padding:40px;text-align:center}
-.fb{position:fixed;bottom:0;left:280px;right:0;background:var(--card);border-top:1px solid var(--line);padding:10px 32px;
-  display:flex;gap:10px;align-items:center;z-index:10}
+.fb{position:fixed;bottom:0;left:280px;right:0;background:var(--card);border-top:1px solid var(--line);padding:10px 32px;display:flex;gap:10px;align-items:center;z-index:10}
 .fb code{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line);padding:6px 10px;border-radius:7px;font-size:13px;overflow:auto;white-space:nowrap}
 .fb button{padding:7px 14px;border-radius:7px;border:0;background:var(--acc);color:#fff;cursor:pointer;white-space:nowrap}
-.menu{display:none;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:6px 10px;cursor:pointer}
+.menu{display:none;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:6px 10px;cursor:pointer;margin-bottom:8px}
 kbd{font-size:11px;border:1px solid var(--line);border-radius:4px;padding:0 4px;color:var(--mute)}
 @media (max-width:900px){
   .app{grid-template-columns:1fr}
   aside{position:fixed;inset:0 auto 0 0;width:min(300px,85vw);z-index:20;transform:translateX(-100%);transition:transform .2s;box-shadow:0 0 40px #0004}
-  aside.open{transform:none}
-  .menu{display:inline-block}
-  main{padding:16px 16px 100px}
-  .grid{grid-template-columns:1fr}
-  .fb{left:0;padding:10px 16px}
-  h1{font-size:20px}
+  aside.open{transform:none}.menu{display:inline-block}
+  main{padding:16px 16px 100px}.grid{grid-template-columns:1fr}
+  .fb{left:0;padding:10px 16px}h1{font-size:20px}
 }
 </style>
 </head>
@@ -92,25 +83,25 @@ kbd{font-size:11px;border:1px solid var(--line);border-radius:4px;padding:0 4px;
 <div class="app">
 <aside id="side">
   <div class="brand">Robot Learning Digest</div>
-  <div class="sub">Quadruped · Humanoid · Manipulation</div>
-  <h3>Weeks</h3><div class="weeks" id="weeks"></div>
+  <div class="sub">One library, ranked with your current taste</div>
   <h3>Topic weights</h3><div id="weights"></div>
+  <h3>Scoring</h3><div class="rub" id="rubric"></div>
   <h3>Taste themes</h3><div class="chips" id="themes"></div>
   <h3>Followed labs</h3><div class="chips" id="labs"></div>
   <h3>Liked</h3><div class="chips" id="liked"></div>
+  <h3>Digest runs</h3><div class="rub" id="runs"></div>
   <p class="sub" style="margin-top:22px"><kbd>/</kbd> search · profile updated <span id="pupd"></span></p>
 </aside>
 <main>
-  <div class="top">
-    <div><button class="menu" id="menu">☰ Weeks</button>
-      <h1 id="title"></h1><div class="sub" id="subtitle"></div></div>
-  </div>
-  <div class="stats" id="stats"></div>
+  <button class="menu" id="menu">☰ Profile</button>
+  <h1>Paper library</h1>
+  <div class="sub" id="subtitle"></div>
+  <div class="tabs" id="tabs"></div>
   <div class="tools">
-    <input type="search" id="q" placeholder="Search titles, authors, notes…">
-    <div class="seg" id="topicSeg"></div>
+    <input type="search" id="q" placeholder="Search titles, authors, notes, arXiv id…">
+    <select id="week"></select>
     <div class="seg" id="tagSeg"></div>
-    <select id="sort"><option value="rank">Digest order</option><option value="score">Score</option><option value="topic">Topic</option></select>
+    <select id="sort"><option value="score">Sort: score</option><option value="new">Sort: newest</option></select>
     <label class="sub"><input type="checkbox" id="hideRead"> hide read</label>
   </div>
   <div class="grid" id="grid"></div>
@@ -120,106 +111,108 @@ kbd{font-size:11px;border:1px solid var(--line);border-radius:4px;padding:0 4px;
 <div class="fb"><code id="fbtxt"></code><button id="copy">Copy feedback</button></div>
 <script src="data.js"></script>
 <script>
-const P=window.PROFILE||{weights:{},themes:[],labs:[],liked:[]}, D=window.DIGESTS||[];
-const S={week:0,q:"",topic:"All",tag:"All",sort:"rank",hideRead:false};
-const ls={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
-  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const P=window.PROFILE||{}, W=window.WEEKS||[], L=window.PAPERS||[];
+const CRIT=[["taste","Taste"],["novelty","Novelty"],["evidence","Real-world"],["signal","Signal"],["reuse","Reuse"]];
+const COL={Quadruped:"var(--q)",Humanoid:"var(--h)",Manipulation:"var(--m)"};
+const latest=W[0]?.date;
+const ls={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const $=id=>document.getElementById(id);
 const pdf=id=>`https://arxiv.org/pdf/${id}`, abs=id=>`https://arxiv.org/abs/${id}`;
-const colors={Quadruped:"var(--q)",Humanoid:"var(--h)",Manipulation:"var(--m)"};
-Object.assign(S,ls.get("ui",{}));if(S.week>=D.length)S.week=0;
-const save=()=>ls.set("ui",{sort:S.sort,hideRead:S.hideRead,week:S.week});
-let read=ls.get("read",{});
+const S=Object.assign({topic:"All",week:"all",tag:"All",sort:"score",hideRead:false,q:""},ls.get("ui2",{}));S.q="";
+const save=()=>ls.set("ui2",{topic:S.topic,week:S.week,tag:S.tag,sort:S.sort,hideRead:S.hideRead});
+let read=ls.get("read",{}), mine=ls.get("myRatings",{}); // mine: {id:{r,why}} not yet sent
 
-function seg(el,opts,key){
-  el.innerHTML=opts.map(o=>`<button class="${S[key]===o?"on":""}" data-v="${o}">${o==="ALL"?"All weeks":o}</button>`).join("");
-  el.onclick=e=>{const b=e.target.closest("button");if(!b)return;S[key]=b.dataset.v;render()};
+const ratingOf=p=>mine[p.id]?.r??p.rating??null;
+function score(p){
+  if(!p.scores)return null;
+  const w=(P.rubric||{})[p.pick==="field"?"field":"taste"]||{};
+  const raw=CRIT.reduce((s,[k])=>s+(w[k]||0)*(p.scores[k]||0),0);
+  const total=raw*((P.weights||{})[p.topic]??1)+((P.ratingBoost||{})[ratingOf(p)]||0);
+  return {raw,total:Math.round(total*100)/100};
 }
-function papersFor(){
-  const all=S.week==="all";
-  const src=all?D.flatMap((w,wi)=>w.papers.map((p,i)=>({...p,rank:i+1,wk:w,wi}))):D[S.week].papers.map((p,i)=>({...p,rank:i+1,wk:D[S.week],wi:S.week}));
-  const q=S.q.toLowerCase();
-  let list=src.filter(p=>(S.topic==="All"||p.topic===S.topic)
-    &&(S.tag==="All"||p.tag===S.tag||(S.tag==="Field"&&p.pick==="field"))
-    &&(!q||[p.title,p.authors,p.why,p.id,p.evidence].join(" ").toLowerCase().includes(q))
-    &&(!S.hideRead||!read[p.id]));
-  if(S.sort==="score")list.sort((a,b)=>(b.score??-1)-(a.score??-1));
-  if(S.sort==="topic")list.sort((a,b)=>a.topic.localeCompare(b.topic)||a.rank-b.rank);
-  return list;
-}
+L.forEach(p=>p._s=score(p));
+
 function sidebar(){
-  $("weeks").innerHTML=`<button class="${S.week==="all"?"on":""}" data-i="all"><span>All weeks<small>search everything</small></span><span class="pill">${D.reduce((n,w)=>n+w.papers.length,0)}</span></button>`+
-    D.map((w,i)=>`<button class="${i===S.week?"on":""}" data-i="${i}"><span>${esc(w.week)}<small>${esc(w.note||w.date)}</small></span><span class="pill">${w.papers.length}</span></button>`).join("");
-  $("weeks").onclick=e=>{const b=e.target.closest("button");if(!b)return;S.week=b.dataset.i==="all"?"all":+b.dataset.i;$("side").classList.remove("open");save();render()};
-  const max=Math.max(1.5,...Object.values(P.weights));
-  $("weights").innerHTML=Object.entries(P.weights).map(([k,v])=>`<div class="bar"><span>${k}</span><span class="track"><i style="width:${v/max*100}%;background:${colors[k]||"var(--acc)"}"></i></span><span>${v.toFixed(1)}</span></div>`).join("");
-  const chips=a=>(a||[]).map(t=>`<span class="chip">${esc(t)}</span>`).join("")||`<span class="sub">none yet</span>`;
+  const max=Math.max(1.5,...Object.values(P.weights||{}));
+  $("weights").innerHTML=Object.entries(P.weights||{}).map(([k,v])=>`<div class="bar"><span>${k}</span><span class="track"><i style="width:${v/max*100}%;background:${COL[k]}"></i></span><span>${v.toFixed(1)}</span></div>`).join("");
+  const t=P.rubric?.taste||{}, f=P.rubric?.field||{};
+  $("rubric").innerHTML=`Score = Σ criterion × weight, × topic weight, + rating boost.<br>Taste picks: ${CRIT.map(([k,n])=>`${n} ${Math.round((t[k]||0)*100)}%`).join(" · ")}<br>Field picks: ${CRIT.filter(([k])=>f[k]).map(([k,n])=>`${n} ${Math.round(f[k]*100)}%`).join(" · ")}<br>Boost: ${Object.entries(P.ratingBoost||{}).map(([k,v])=>`${k} ${v>0?"+":""}${v}`).join(" · ")}`;
+  const chips=a=>(a||[]).map(x=>`<span class="chip">${esc(x)}</span>`).join("")||`<span class="sub">none yet</span>`;
   $("themes").innerHTML=chips(P.themes);$("labs").innerHTML=chips(P.labs);$("liked").innerHTML=chips(P.liked);
+  $("runs").innerHTML=W.map(w=>`${esc(w.start)} → ${esc(w.end)} · ${L.filter(p=>p.week===w.date).length} papers${w.note?`<br><span>${esc(w.note)}</span>`:""}`).join("<br>");
   $("pupd").textContent=P.updated||"";
 }
-function render(){
-  if(!D.length){$("grid").innerHTML=`<div class="empty">No digests yet.</div>`;return}
-  sidebar();
-  const all=S.week==="all", w=all?null:D[S.week];
-  $("title").textContent=all?"All weeks":`Week of ${w.week}`;
-  $("subtitle").textContent=all?`${D.length} digests`:`Published ${w.date}${w.note?" · "+w.note:""}`;
-  const base=all?D.flatMap(x=>x.papers):w.papers;
-  const cnt=f=>base.filter(f).length;
-  $("stats").innerHTML=[["Papers",base.length],["Must-read",cnt(p=>p.tag==="Must-read")],["Quadruped",cnt(p=>p.topic==="Quadruped")],
-    ["Humanoid",cnt(p=>p.topic==="Humanoid")],["Manipulation",cnt(p=>p.topic==="Manipulation")],["Read",cnt(p=>read[p.id])]]
-    .map(([k,v])=>`<div class="stat"><b>${v}</b><span>${k}</span></div>`).join("");
-  seg($("topicSeg"),["All","Quadruped","Humanoid","Manipulation"],"topic");
-  seg($("tagSeg"),["All","Must-read","Skim","FYI","Field"],"tag");
+function controls(){
+  const topics=["All","Quadruped","Humanoid","Manipulation"];
+  $("tabs").innerHTML=topics.map(t=>`<button class="${S.topic===t?"on":""}" style="--tc:${COL[t]||"var(--ink)"}" data-t="${t}">${t}<span class="n">${t==="All"?L.length:L.filter(p=>p.topic===t).length}</span></button>`).join("");
+  $("week").innerHTML=`<option value="all">All weeks</option>`+W.map(w=>`<option value="${w.date}">Week ${w.start} → ${w.end}${w.date===latest?" (latest)":""}</option>`).join("");
+  $("week").value=W.some(w=>w.date===S.week)?S.week:"all";
+  $("tagSeg").innerHTML=["All","Must-read","Skim","FYI","Field"].map(o=>`<button class="${S.tag===o?"on":""}" data-v="${o}">${o}</button>`).join("");
   $("sort").value=S.sort;$("hideRead").checked=S.hideRead;
-  const list=papersFor();
-  $("grid").innerHTML=list.length?list.map(card).join(""):`<div class="empty">No papers match.</div>`;
-  $("alsoBox").innerHTML=!all&&w.alsoNotable?.length?`<div class="also"><h3 style="margin-top:0">Also notable</h3><ul>${w.alsoNotable.map(a=>
-    `<li><a href="${pdf(a.id)}" target="_blank" rel="noopener">${esc(a.title)}</a> <span class="sub">${a.id} · <a href="${abs(a.id)}" target="_blank" rel="noopener">abs</a></span></li>`).join("")}</ul></div>`:"";
-  bind();fb();
 }
-function card(p){
-  const R=ls.get("ratings:"+p.wk.date,{})[p.rank]||{};
-  return `<article class="card ${p.topic} ${read[p.id]?"read":""}" data-id="${p.id}" data-d="${p.wk.date}" data-n="${p.rank}">
-  <div class="chead"><span class="rank">#${p.rank}</span>
+function list(){
+  const q=S.q.toLowerCase();
+  const r=L.filter(p=>(S.topic==="All"||p.topic===S.topic)&&(S.week==="all"||p.week===S.week)
+    &&(S.tag==="All"||p.tag===S.tag||(S.tag==="Field"&&p.pick==="field"))&&(!S.hideRead||!read[p.id])
+    &&(!q||[p.title,p.authors,p.why,p.id,p.evidence,p.venue].join(" ").toLowerCase().includes(q)));
+  r.sort(S.sort==="new"?(a,b)=>b.week.localeCompare(a.week)||(b._s?.total??-9)-(a._s?.total??-9):(a,b)=>(b._s?.total??-9)-(a._s?.total??-9));
+  return r;
+}
+function card(p,i){
+  const s=p._s, R=mine[p.id]||{}, rt=ratingOf(p);
+  return `<article class="card ${p.topic} ${read[p.id]?"read":""}" data-id="${p.id}">
+  <div class="chead"><span class="rank">#${i+1}</span>
     <h4><a href="${pdf(p.id)}" target="_blank" rel="noopener">${esc(p.title)}</a></h4>
-    ${p.score!=null?`<span class="score" title="weighted score">${p.score}</span>`:""}</div>
-  <div class="meta"><span class="b ${p.tag}">${p.tag}</span><span class="b" style="color:${colors[p.topic]}">${p.topic}</span>
-    <span class="b ${p.pick}">${p.pick} pick</span>${p.evidence?`<span class="b">${esc(p.evidence)}</span>`:""}
-    ${S.week==="all"?`<span class="wk">${esc(p.wk.week)}</span>`:""}</div>
+    <div class="score" title="raw rubric ${s?s.raw.toFixed(2):"–"} × topic weight + rating boost"><b>${s?s.total.toFixed(1):"–"}</b><span>score</span></div></div>
+  <div class="meta">${p.week===latest?`<span class="b new">NEW</span>`:""}<span class="b ${p.tag}">${p.tag}</span>
+    <span class="b" style="color:${COL[p.topic]}">${p.topic}</span><span class="b ${p.pick}">${p.pick} pick</span>
+    ${p.venue?`<span class="b">${esc(p.venue)}</span>`:""}${p.evidence?`<span class="b">${esc(p.evidence)}</span>`:""}</div>
   ${p.authors?`<div class="authors">${esc(p.authors)}</div>`:""}
   <p class="why">${esc(p.why)}</p>
+  ${p.scores?`<div class="breakdown">${CRIT.map(([k,n])=>`<div>${n} ${p.scores[k]}<div class="track"><i style="width:${p.scores[k]*20}%;background:${COL[p.topic]}"></i></div></div>`).join("")}</div>`:""}
   <div class="links"><a class="primary" href="${pdf(p.id)}" target="_blank" rel="noopener">PDF</a>
     <a href="${abs(p.id)}" target="_blank" rel="noopener">Abstract</a>
     <a href="https://huggingface.co/papers/${p.id}" target="_blank" rel="noopener">HF</a>
     ${p.code?`<a href="${esc(p.code)}" target="_blank" rel="noopener">Code / project</a>`:""}
     <button class="readbtn ${read[p.id]?"on":""}" data-act="read">${read[p.id]?"✓ Read":"Mark read"}</button></div>
-  <div class="rate">${["👍","👎","meh"].map(r=>`<button class="${R.r===r?"on":""}" data-r="${r}">${r}</button>`).join("")}
-    <input placeholder="reason (optional)" value="${esc(R.why||"")}"></div>
+  <div class="rate">${["👍","👎","meh"].map(r=>`<button class="${rt===r?"on":""}" data-r="${r}">${r}</button>`).join("")}
+    <input placeholder="${p.rating?"saved: "+esc(p.ratingNote||p.rating):"reason (optional)"}" value="${esc(R.why||"")}">
+    ${p.rating&&!mine[p.id]?`<span class="saved">logged</span>`:""}</div>
 </article>`;
 }
+function render(){
+  sidebar();controls();
+  const r=list();
+  $("subtitle").textContent=`${L.length} papers from ${W.length} digest run${W.length===1?"":"s"} · showing ${r.length}`;
+  $("grid").innerHTML=r.length?r.map(card).join(""):`<div class="empty">No papers match.</div>`;
+  const wk=W.find(w=>w.date===(S.week==="all"?latest:S.week));
+  $("alsoBox").innerHTML=wk?.notable?.length?`<div class="also"><h3 style="margin-top:0">Also notable · week ${esc(wk.start)} → ${esc(wk.end)}</h3><ul>${wk.notable.map(a=>
+    `<li><a href="${pdf(a.id)}" target="_blank" rel="noopener">${esc(a.title)}</a> <span class="sub">${a.id} · <a href="${abs(a.id)}" target="_blank" rel="noopener">abs</a></span></li>`).join("")}</ul></div>`:"";
+  bind();fb();
+}
 function bind(){
-  document.querySelectorAll(".card").forEach(c=>{
-    const id=c.dataset.id,key="ratings:"+c.dataset.d,n=c.dataset.n;
+  document.querySelectorAll(".card").forEach(c=>{const id=c.dataset.id;
     c.querySelector("[data-act=read]").onclick=()=>{read[id]?delete read[id]:read[id]=1;ls.set("read",read);render()};
-    c.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{const R=ls.get(key,{});R[n]={...R[n],r:R[n]?.r===b.dataset.r?null:b.dataset.r};ls.set(key,R);render()});
-    c.querySelector(".rate input").oninput=e=>{const R=ls.get(key,{});R[n]={...R[n],why:e.target.value};ls.set(key,R);fb()};
+    c.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{const cur=mine[id]||{};
+      if(cur.r===b.dataset.r){delete mine[id]}else mine[id]={...cur,r:b.dataset.r};
+      ls.set("myRatings",mine);const p=L.find(x=>x.id===id);p._s=score(p);render()});
+    c.querySelector(".rate input").oninput=e=>{mine[id]={...(mine[id]||{}),why:e.target.value};ls.set("myRatings",mine);fb()};
   });
 }
 function fb(){
-  const weeks=S.week==="all"?D:[D[S.week]];
-  const parts=weeks.map(w=>{const R=ls.get("ratings:"+w.date,{});
-    const s=Object.entries(R).filter(([,v])=>v&&v.r).map(([n,v])=>`${n} ${v.r}${v.why?" "+v.why:""}`).join(", ");
-    return s?(weeks.length>1?`[${w.date}] `:"")+s:""}).filter(Boolean);
-  $("fbtxt").textContent=parts.join(" | ")||"Rate papers, then copy this line and paste it to Claude.";
+  const s=Object.entries(mine).filter(([,v])=>v.r).map(([id,v])=>`${id} ${v.r}${v.why?" "+v.why:""}`).join(", ");
+  $("fbtxt").textContent=s||"Rate papers, then copy this line and paste it to Claude.";
 }
-$("q").oninput=e=>{S.q=e.target.value;const pos=e.target.selectionStart;render();$("q").focus();$("q").setSelectionRange(pos,pos)};
+$("tabs").onclick=e=>{const b=e.target.closest("button");if(b){S.topic=b.dataset.t;save();render()}};
+$("tagSeg").onclick=e=>{const b=e.target.closest("button");if(b){S.tag=b.dataset.v;save();render()}};
+$("week").onchange=e=>{S.week=e.target.value;save();render()};
 $("sort").onchange=e=>{S.sort=e.target.value;save();render()};
 $("hideRead").onchange=e=>{S.hideRead=e.target.checked;save();render()};
+$("q").oninput=e=>{S.q=e.target.value;render()};
 $("menu").onclick=()=>$("side").classList.toggle("open");
 $("copy").onclick=async()=>{try{await navigator.clipboard.writeText($("fbtxt").textContent);$("copy").textContent="Copied ✓";setTimeout(()=>$("copy").textContent="Copy feedback",1500)}catch(e){}};
-document.addEventListener("keydown",e=>{if(e.key==="/"&&document.activeElement.tagName!=="INPUT"){e.preventDefault();$("q").focus()}
-  if(e.key==="Escape")$("side").classList.remove("open")});
+document.addEventListener("keydown",e=>{if(e.key==="/"&&!/INPUT|SELECT/.test(document.activeElement.tagName)){e.preventDefault();$("q").focus()}if(e.key==="Escape")$("side").classList.remove("open")});
 render();
 </script>
 </body>
