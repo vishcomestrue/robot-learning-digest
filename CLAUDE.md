@@ -19,7 +19,7 @@ My ratings come from skimming, so treat them as a taste signal, not a quality ve
 - **Topic weights:** Quadruped 1.2 · Humanoid 1.2 · Manipulation 1.1 (adjusted from feedback, ±0.1 per rating).
 
 ## Selection
-- **No fixed count.** Include every paper that clears the bar (typically 5–8): taste picks (closest to my work) + 1–2 **field picks** (biggest papers of the week
+- **No fixed count.** Include every paper that clears the bar (typically 5–8, **never more than 8**): taste picks (closest to my work) + 1–2 **field picks** (biggest papers of the week
   outside my core area, mainly manipulation, judged by outside signals).
 - Plus an "also notable" list: up to 5 titles, one line each.
 
@@ -34,13 +34,12 @@ My ratings come from skimming, so treat them as a taste signal, not a quality ve
 Field picks: swap Taste fit for Outside signal ×2.
 
 ## Pipeline (what worked in the test run)
-1. **Collect:** arXiv daily catchup pages, one per weekday:
-   `https://arxiv.org/catchup/cs.RO/YYYY-MM-DD` (Mon–Fri). Pages are long, so read each in **two
-   passes** (they truncate around 100k chars). The arXiv API and `/search` are blocked by robots
-   for the fetch tool; `/list/cs.RO/pastweek` only shows the latest day, partially.
-2. **Keyword filter:** quadruped, legged, locomotion, humanoid, whole-body, loco-manipulation,
+1. **Collect:** download (with `curl`, not WebFetch, so nothing is truncated) the arXiv catchup page for each
+   weekday **with abstracts**: `https://arxiv.org/catchup/cs.RO/YYYY-MM-DD?abs=True` (Mon-Fri). Parse new +
+   cross-list entries (skip replacements). The arXiv API and `/search` are blocked for the fetch tool.
+2. **Keyword filter** on title **and abstract**: quadruped, legged, locomotion, humanoid, whole-body, loco-manipulation,
    manipulation, dexterous, VLA, imitation, diffusion policy, sim-to-real, teleoperation, mimic, motion prior, AMP, motion tracking, gait, state estimation.
-3. **Triage** by title against the taste profile and keep ~25. **Deep read** the `arxiv.org/abs/<id>` pages,
+3. **Triage** by title + abstract against the taste profile and keep ~25. **Deep read** the `arxiv.org/abs/<id>` pages,
    and the project page / PDF to check for code.
 4. **Outside signal:** `https://huggingface.co/papers` (fetch the date pages for each day of the week,
    e.g. `https://huggingface.co/papers/date/YYYY-MM-DD`).
