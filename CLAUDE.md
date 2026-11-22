@@ -74,7 +74,7 @@ Also notable: 2611.25958 (Bellegarda terrain gaits), 2611.20452 (XMimic/XSoma),
 ## Website (one ranked library, not week-by-week)
 `site/index.html` renders `site/data.js`, which holds `PROFILE`, `WEEKS` (one entry per run, newest first,
 with also-notable) and `PAPERS` (every paper ever picked). The overall score is computed in the browser from
-each paper's per-criterion `scores` (0-5) × the current `PROFILE.rubric` × the topic weight, plus a rating boost,
+each paper's per-criterion `scores` (0-5) × the current `PROFILE.rubric` × the topic weight, plus a rating boost (in the All tab, field picks use the taste rubric too),
 so the whole library re-ranks as weights change.
 - Weekly run: append that week's papers to `PAPERS` (with `week` = run date, full `scores` object) and prepend
   a `WEEKS` entry. **Never edit or remove existing entries; skip ids already in PAPERS; a failed run pushes nothing.**

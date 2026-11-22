@@ -124,20 +124,20 @@ const save=()=>ls.set("ui2",{topic:S.topic,week:S.week,tag:S.tag,sort:S.sort,hid
 let read=ls.get("read",{}), mine=ls.get("myRatings",{}); // mine: {id:{r,why}} not yet sent
 
 const ratingOf=p=>mine[p.id]?.r??p.rating??null;
-function score(p){
+// In the All tab every paper uses the taste rubric so field picks don't outrank on-taste papers.
+function score(p,allTab){
   if(!p.scores)return null;
-  const w=(P.rubric||{})[p.pick==="field"?"field":"taste"]||{};
+  const w=(P.rubric||{})[p.pick==="field"&&!allTab?"field":"taste"]||{};
   const raw=CRIT.reduce((s,[k])=>s+(w[k]||0)*(p.scores[k]||0),0);
   const total=raw*((P.weights||{})[p.topic]??1)+((P.ratingBoost||{})[ratingOf(p)]||0);
   return {raw,total:Math.round(total*100)/100};
 }
-L.forEach(p=>p._s=score(p));
 
 function sidebar(){
   const max=Math.max(1.5,...Object.values(P.weights||{}));
   $("weights").innerHTML=Object.entries(P.weights||{}).map(([k,v])=>`<div class="bar"><span>${k}</span><span class="track"><i style="width:${v/max*100}%;background:${COL[k]}"></i></span><span>${v.toFixed(1)}</span></div>`).join("");
   const t=P.rubric?.taste||{}, f=P.rubric?.field||{};
-  $("rubric").innerHTML=`Score = Σ criterion × weight, × topic weight, + rating boost.<br>Taste picks: ${CRIT.map(([k,n])=>`${n} ${Math.round((t[k]||0)*100)}%`).join(" · ")}<br>Field picks: ${CRIT.filter(([k])=>f[k]).map(([k,n])=>`${n} ${Math.round(f[k]*100)}%`).join(" · ")}<br>Boost: ${Object.entries(P.ratingBoost||{}).map(([k,v])=>`${k} ${v>0?"+":""}${v}`).join(" · ")}`;
+  $("rubric").innerHTML=`Score = Σ criterion × weight, × topic weight, + rating boost.<br>Taste picks: ${CRIT.map(([k,n])=>`${n} ${Math.round((t[k]||0)*100)}%`).join(" · ")}<br>Field picks (topic tabs only; All uses taste weights for everyone): ${CRIT.filter(([k])=>f[k]).map(([k,n])=>`${n} ${Math.round(f[k]*100)}%`).join(" · ")}<br>Boost: ${Object.entries(P.ratingBoost||{}).map(([k,v])=>`${k} ${v>0?"+":""}${v}`).join(" · ")}`;
   const chips=a=>(a||[]).map(x=>`<span class="chip">${esc(x)}</span>`).join("")||`<span class="sub">none yet</span>`;
   $("themes").innerHTML=chips(P.themes);$("labs").innerHTML=chips(P.labs);$("liked").innerHTML=chips(P.liked);
   $("runs").innerHTML=W.map(w=>`${esc(w.start)} → ${esc(w.end)} · ${L.filter(p=>p.week===w.date).length} papers${w.note?`<br><span>${esc(w.note)}</span>`:""}`).join("<br>");
@@ -153,6 +153,7 @@ function controls(){
 }
 function list(){
   const q=S.q.toLowerCase();
+  L.forEach(p=>p._s=score(p,S.topic==="All"));
   const r=L.filter(p=>(S.topic==="All"||p.topic===S.topic)&&(S.week==="all"||p.week===S.week)
     &&(S.tag==="All"||p.tag===S.tag||(S.tag==="Field"&&p.pick==="field"))&&(!S.hideRead||!read[p.id])
     &&(!q||[p.title,p.authors,p.why,p.id,p.evidence,p.venue].join(" ").toLowerCase().includes(q)));
@@ -196,7 +197,7 @@ function bind(){
     c.querySelector("[data-act=read]").onclick=()=>{read[id]?delete read[id]:read[id]=1;ls.set("read",read);render()};
     c.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{const cur=mine[id]||{};
       if(cur.r===b.dataset.r){delete mine[id]}else mine[id]={...cur,r:b.dataset.r};
-      ls.set("myRatings",mine);const p=L.find(x=>x.id===id);p._s=score(p);render()});
+      ls.set("myRatings",mine);render()});
     c.querySelector(".rate input").oninput=e=>{mine[id]={...(mine[id]||{}),why:e.target.value};ls.set("myRatings",mine);fb()};
   });
 }
