@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robot Learning Digest</title>
+<style>
+:root{--bg:#f6f5f1;--card:#fff;--ink:#1d1d1b;--mute:#6b6a66;--line:#e3e1da;--acc:#2f5d8a;
+  --must:#b5432f;--skim:#a07a1c;--fyi:#5b6b7a;--q:#2f7d5b;--h:#2f5d8a;--m:#8a4f9e}
+@media (prefers-color-scheme:dark){:root{--bg:#141414;--card:#1e1e1d;--ink:#ecebe6;--mute:#9b9a94;
+  --line:#2f2e2b;--acc:#7fb0e0;--must:#e57a63;--skim:#d6b35a;--fyi:#9fb0c0;--q:#6cc59b;--h:#7fb0e0;--m:#c89ad8}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--acc)}
+.wrap{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+aside{border-right:1px solid var(--line);padding:24px 18px;position:sticky;top:0;height:100vh;overflow:auto}
+main{padding:28px 32px;max-width:980px}
+h1{font-size:18px;margin:0 0 4px}h2{font-size:22px;margin:0 0 4px}
+h3{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin:22px 0 8px}
+.weeks button{display:block;width:100%;text-align:left;background:none;border:0;color:var(--ink);
+  padding:7px 10px;border-radius:6px;cursor:pointer;font:inherit}
+.weeks button.on{background:var(--card);box-shadow:0 0 0 1px var(--line)}
+.weeks small{color:var(--mute);display:block}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid var(--line);background:var(--card)}
+.bar{display:flex;align-items:center;gap:8px;font-size:13px;margin:4px 0}
+.bar span:first-child{width:90px}.bar i{display:block;height:6px;border-radius:3px;background:var(--acc)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 20px}
+.filters button{font:inherit;font-size:13px;padding:4px 12px;border-radius:99px;border:1px solid var(--line);
+  background:var(--card);color:var(--ink);cursor:pointer}
+.filters button.on{background:var(--ink);color:var(--bg)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:14px;
+  display:grid;grid-template-columns:34px 1fr;gap:4px 14px}
+.num{font-size:22px;font-weight:600;color:var(--mute)}
+.card h4{margin:0;font-size:16px}
+.meta{font-size:13px;color:var(--mute);display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 8px}
+.tag{font-weight:600}.Must-read{color:var(--must)}.Skim{color:var(--skim)}.FYI{color:var(--fyi)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
+.Quadruped{background:var(--q)}.Humanoid{background:var(--h)}.Manipulation{background:var(--m)}
+.why{margin:0}
+.rate{grid-column:2;display:flex;gap:6px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.rate button{font:inherit;font-size:13px;padding:3px 10px;border-radius:6px;border:1px solid var(--line);
+  background:none;color:var(--ink);cursor:pointer}
+.rate button.on{background:var(--ink);color:var(--bg)}
+.rate input{flex:1;min-width:160px;font:inherit;font-size:13px;padding:4px 8px;border:1px solid var(--line);
+  border-radius:6px;background:var(--bg);color:var(--ink)}
+.also li{margin:4px 0}
+.fb{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding:12px 0;margin-top:20px;
+  display:flex;gap:10px;align-items:center}
+.fb code{flex:1;background:var(--card);border:1px solid var(--line);padding:6px 10px;border-radius:6px;font-size:13px;overflow:auto;white-space:nowrap}
+.fb button{font:inherit;padding:6px 14px;border-radius:6px;border:0;background:var(--acc);color:#fff;cursor:pointer}
+.note{color:var(--mute);font-size:14px}
+@media (max-width:760px){.wrap{grid-template-columns:1fr}aside{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}
+  main{padding:20px 16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <h1>Robot Learning Digest</h1>
+  <div class="note">Quadruped · Humanoid · Manipulation</div>
+  <h3>Weeks</h3><div class="weeks" id="weeks"></div>
+  <h3>Topic weights</h3><div id="weights"></div>
+  <h3>Taste themes</h3><div class="chips" id="themes"></div>
+  <h3>Followed labs</h3><div class="chips" id="labs"></div>
+</aside>
+<main id="main"></main>
+</div>
+<script src="data.js"></script>
+<script>
+const P=window.PROFILE, D=window.DIGESTS;
+let cur=0, filter="All";
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))||{}}catch(e){return{}}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function side(){
+  weeks.innerHTML=D.map((w,i)=>`<button class="${i===cur?"on":""}" data-i="${i}">${esc(w.week)}<small>${esc(w.note||w.date)}</small></button>`).join("");
+  weeks.querySelectorAll("button").forEach(b=>b.onclick=()=>{cur=+b.dataset.i;filter="All";render()});
+  weights.innerHTML=Object.entries(P.weights).map(([k,v])=>`<div class="bar"><span>${k}</span><i style="width:${v*60}px"></i><span>${v.toFixed(1)}</span></div>`).join("");
+  themes.innerHTML=P.themes.map(t=>`<span class="chip">${esc(t)}</span>`).join("");
+  labs.innerHTML=P.labs.map(t=>`<span class="chip">${esc(t)}</span>`).join("");
+}
+function render(){
+  side();
+  const w=D[cur], key="ratings:"+w.date, R=store.get(key);
+  const list=w.papers.map((p,i)=>({...p,n:i+1})).filter(p=>filter==="All"||p.topic===filter||p.pick===filter||p.tag===filter);
+  main.innerHTML=`<h2>Week of ${esc(w.week)}</h2><div class="note">Published ${esc(w.date)}${w.note?" · "+esc(w.note):""}</div>
+  <div class="filters">${["All","Quadruped","Humanoid","Manipulation","Must-read","taste","field"].map(f=>`<button class="${f===filter?"on":""}" data-f="${f}">${f}</button>`).join("")}</div>
+  ${list.map(p=>`<div class="card">
+    <div class="num">${p.n}</div>
+    <div><h4><a href="https://arxiv.org/abs/${p.id}" target="_blank">${esc(p.title)}</a></h4>
+    <div class="meta"><span class="tag ${p.tag}">${p.tag}</span><span><span class="dot ${p.topic}"></span>${p.topic}</span>
+      <span>${p.pick} pick</span><span>${esc(p.evidence)}</span>${p.authors?`<span>${esc(p.authors)}</span>`:""}
+      ${p.score!=null?`<span>score ${p.score}</span>`:""}
+      <a href="https://arxiv.org/abs/${p.id}" target="_blank">arXiv ${p.id}</a>${p.code?`<a href="${esc(p.code)}" target="_blank">code</a>`:""}</div>
+    <p class="why">${esc(p.why)}</p></div>
+    <div class="rate" data-n="${p.n}">${["👍","👎","meh"].map(r=>`<button class="${R[p.n]?.r===r?"on":""}" data-r="${r}">${r}</button>`).join("")}
+      <input placeholder="reason (optional)" value="${esc(R[p.n]?.why||"")}"></div>
+  </div>`).join("")}
+  <h3>Also notable</h3><ul class="also">${w.alsoNotable.map(a=>`<li><a href="https://arxiv.org/abs/${a.id}" target="_blank">${a.id}</a> ${esc(a.title)}</li>`).join("")}</ul>
+  <div class="fb"><code id="fbtxt"></code><button id="copy">Copy feedback</button></div>`;
+  main.querySelectorAll(".filters button").forEach(b=>b.onclick=()=>{filter=b.dataset.f;render()});
+  main.querySelectorAll(".rate").forEach(el=>{const n=el.dataset.n;
+    el.querySelectorAll("button").forEach(b=>b.onclick=()=>{const R=store.get(key);R[n]={...R[n],r:R[n]?.r===b.dataset.r?null:b.dataset.r};store.set(key,R);render()});
+    el.querySelector("input").oninput=e=>{const R=store.get(key);R[n]={...R[n],why:e.target.value};store.set(key,R);fb()}});
+  const fb=()=>{const R=store.get(key);fbtxt.textContent=Object.entries(R).filter(([,v])=>v.r).map(([n,v])=>`${n} ${v.r}${v.why?" "+v.why:""}`).join(", ")||"Rate papers above, then copy and paste the line to Claude."};
+  fb(); copy.onclick=()=>navigator.clipboard.writeText(fbtxt.textContent);
+}
+render();
+</script>
+</body>
+</html>
