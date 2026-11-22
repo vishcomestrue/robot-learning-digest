@@ -17,3 +17,15 @@ Raw: "1 👍 Really good paper, 2 👍 Decent paper, i havent dived depth into A
 
 Weights after: Quadruped 1.2 · Humanoid 1.2 · Manipulation 1.1
 Rules changed: the digest size is now flexible (no fixed 5). Track the SuperMimic family and AMP-style motion-prior papers.
+
+## 2026-11-22: rebuilt week (2026-11-14 → 11-20), new picks
+Raw: "2611.25215 👍, 2611.22231 👍 i believe this is real world deployable, they are talking about something fundamental that happens in real life, 2611.20710 👍 seems to be a decent paper, have not dived deep yet."
+
+| Paper | Rating | Note | Effect |
+|---|---|---|---|
+| ROAM (2611.25215) | 👍 | | +VLM + learned legged control in the wild, +ETH RSL; Quadruped +0.1 |
+| Temperature→battery-limited locomotion (2611.22231) | 👍 | real-world deployable, fundamental | +hardware limits / deployment realism (rank real-world constraints higher); Quadruped +0.1 |
+| SG-ODOM (2611.20710) | 👍 | decent, not read deeply | +proprioceptive odometry, +Fallon (Oxford); Quadruped +0.1 |
+
+Weights after: Quadruped 1.5 · Humanoid 1.2 · Manipulation 1.1
+Note: the owner is fine with Bellegarda being in also-notable this week.

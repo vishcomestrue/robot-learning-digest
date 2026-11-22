@@ -3,7 +3,7 @@
 // topic weights below, so the whole library re-ranks as taste changes.
 window.PROFILE = {
   updated: "2026-11-22",
-  weights: { Quadruped: 1.2, Humanoid: 1.2, Manipulation: 1.1 },
+  weights: { Quadruped: 1.5, Humanoid: 1.2, Manipulation: 1.1 },
   rubric: {
     taste:   { taste: 0.35, novelty: 0.20, evidence: 0.20, signal: 0.15, reuse: 0.10 },
     field:   { taste: 0.00, novelty: 0.20, evidence: 0.20, signal: 0.50, reuse: 0.10 }
@@ -18,7 +18,8 @@ window.PROFILE = {
          "Kevin Zakka (mjlab)", "Stanford (Bohg, Karen Liu)", "Physical Intelligence / GDM",
          "Guillaume Bellegarda", "Nico Bohlinger / Jan Peters"],
   liked: ["perceptive loco w/ proprio fallback", "fall recovery", "cross-humanoid transfer",
-          "proprio terrain estimation", "real-robot data quality", "terrain-adaptive gaits", "motion imitation"],
+          "proprio terrain estimation", "real-robot data quality", "terrain-adaptive gaits", "motion imitation",
+          "VLM + learned legged control in the wild", "hardware limits (thermal/battery) for deployment", "proprioceptive odometry"],
   disliked: []
 };
 
@@ -71,18 +72,18 @@ window.PAPERS = [
     title: "Bridging vision-language reasoning and learned control for legged navigation in the wild",
     authors: "Takahiro Miki, Robin Schmid, Manthan Patel, Turcan Tuna, Julia Richter, Julian Nubert, Joonho Lee, Matthias Müller, Marco Hutter (ETH RSL)", venue: "Science Robotics",
     topic: "Quadruped", tag: "Must-read", pick: "taste", evidence: "real robot (legged, kilometer-scale alpine + urban hikes)", code: "https://github.com/leggedrobotics/roam",
-    scores: { taste: 5, novelty: 4, evidence: 5, signal: 5, reuse: 3 }, rating: null, ratingNote: "",
+    scores: { taste: 5, novelty: 4, evidence: 5, signal: 5, reuse: 3 }, rating: "👍", ratingNote: "",
     why: "ROAM: a VLM reads the scene (risks, signs), open-vocabulary segmentation turns its labels into a dense real-time risk map, and that map conditions two sim-trained RL policies (agile locomotion + local navigation). Kilometer-long hikes with minimal intervention. Miki/Lee/Hutter perceptive-locomotion lineage, now with semantics on top; project page links a code repo." },
   { id: "2611.22231", week: "2026-11-21",
     title: "From Temperature-Limited to Battery-Limited Legged Locomotion",
     authors: "Raphaël Ségas, Balázs Opra, Léo Ghafari, Thomas Stewart", venue: "",
     topic: "Quadruped", tag: "Must-read", pick: "taste", evidence: "real robot (Unitree Go2, 10 km runs, stairs + ramps)", code: "https://doi.org/10.5281/zenodo.24274994",
-    scores: { taste: 4, novelty: 5, evidence: 5, signal: 2, reuse: 3 }, rating: null, ratingNote: "",
+    scores: { taste: 4, novelty: 5, evidence: 5, signal: 2, reuse: 3 }, rating: "👍", ratingNote: "Real-world deployable; fundamental real-life constraint",
     why: "A fitted 13-node RC thermal model predicts all 12 Go2 motor temperatures (<1 °C RMSE); the reward penalizes the hottest predicted steady-state temperature, which reacts within one gait cycle, so the policy learns to spread heat without ever observing temperature. With a 5 kg payload: 174 min / 10 km vs thermal shutdown at 19 min for the baseline. Clever reward design you can reuse; the thermal dataset is released." },
   { id: "2611.20710", week: "2026-11-21",
     title: "SG-ODOM: Event-Driven Proprioceptive State Estimation with Stability-Gated Contact Updates for Legged Robots",
     authors: "Francesco Iotti, Chiyun Noh, Franco Angelini, Manolo Garabini, Ayoung Kim, Maurice Fallon, Frank Dellaert (Oxford DRS et al.)", venue: "",
     topic: "Quadruped", tag: "Skim", pick: "taste", evidence: "real-robot sequences (quadruped + humanoid platforms, GrandTour)", code: "https://github.com/ori-drs/SG-ODOM",
-    scores: { taste: 4, novelty: 3, evidence: 4, signal: 3, reuse: 4 }, rating: null, ratingNote: "",
+    scores: { taste: 4, novelty: 3, evidence: 4, signal: 3, reuse: 4 }, rating: "👍", ratingNote: "Decent; haven't gone deep yet",
     why: "Leg odometry assumes a stance foot is stationary, but impact and load transfer break that. SG-ODOM only accepts a contact for a kinematic update once a stability gate says the foot is truly planted, then fires one event-driven correction (plus timeout updates). Up to 25% lower RPE than the baseline on outdoor GrandTour sequences, across quadrupeds and humanoids. Same theme as SBEE, with code." }
 ];
